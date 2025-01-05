@@ -4,6 +4,7 @@ import {
 import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home/Home";
 import Menu from "../Pages/Menu/Menu";
+import Order from "../Pages/Order/Order";
 
 
 
@@ -19,6 +20,10 @@ import Menu from "../Pages/Menu/Menu";
         {
           path: 'menu',
           element: <Menu></Menu>
+        },
+        {
+          path: 'order',
+          element: <Order></Order>
         }
       ]
     },
