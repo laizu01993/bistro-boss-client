@@ -1,16 +1,47 @@
-import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProviders";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
 
-    const navItems = 
-    <>
-    <li><Link to='/'>Home</Link></li>
-    <li><Link to='/menu'>Our Menu</Link></li>
-    <li><Link to='/order'>Order Food</Link></li>
-    </>
+    const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCart();
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.log(error));
+    }
+
+    const navItems = <>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to='/menu'>Our Menu</Link></li>
+            <li><Link to='/order/salads'>Order Food</Link></li>
+            <li><Link to='/secret'>Secret</Link></li>
+            <li>
+                <Link to="/dashboard/cart">
+                    <button className="btn">
+                    <FaShoppingCart className="" />
+                        <div className="badge badge-secondary">+{cart.length}</div>
+                    </button>
+                </Link>
+            </li>
+
+            {
+                user ? <>
+                    {/* <span>{user ?.displayName}</span> */}
+                    <button onClick={handleLogOut} className="">LogOut</button>
+
+                </> : <>
+                    <li><Link to='/login'>Login</Link></li>
+                </>
+            }
+        </>
     return (
 
-        
+
         <div className="navbar fixed z-10 bg-opacity-30 bg-black text-white max-w-screen-xl">
             <div className="navbar-start">
                 <div className="dropdown">
@@ -41,7 +72,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                   {navItems}
+                    {navItems}
                 </ul>
             </div>
             <div className="navbar-end">
