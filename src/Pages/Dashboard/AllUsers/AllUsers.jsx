@@ -17,21 +17,21 @@ const AllUsers = () => {
         }
     })
 
-    const handleMakeAdmin = user =>{
+    const handleMakeAdmin = user => {
         axiosSecure.patch(`/users/admin/${user._id}`)
-        .then(res =>{
-            console.log(res.data);
-            if(res.data.modifiedCount > 0){
-                refetch();
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: `${user.name} is an Admin Now!`,
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-            }
-        })
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `${user.name} is an Admin Now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
     }
 
     const handleDeleteUser = user => {
@@ -91,7 +91,7 @@ const AllUsers = () => {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>
-                                    { user.role === 'admin' ? 'Admin' : <button onClick={() => handleMakeAdmin(user)} className="btn btn-ghost btn-xs bg-amber-600 text-white"><FaUsers></FaUsers></button>}
+                                    {user.role === 'admin' ? 'Admin' : <button onClick={() => handleMakeAdmin(user)} className="btn btn-ghost btn-xs bg-amber-600 text-white"><FaUsers></FaUsers></button>}
                                 </td>
                                 <td>
                                     <button onClick={() => handleDeleteUser(user._id)} className="btn btn-ghost btn-xs bg-red-600 text-white"><RiDeleteBin6Line></RiDeleteBin6Line></button>
