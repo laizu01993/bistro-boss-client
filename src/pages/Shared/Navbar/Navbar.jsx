@@ -56,7 +56,7 @@ const Navbar = () => {
     </li>
   </>
     return (
-        <div className="navbar fixed  z-10 bg-black/30 w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg lg:max-w-screen-xl mx-auto">
+        <div className="navbar sticky top-0 z-50 bg-black/70 max-w-7xl mx-auto rounded-md">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost text-white lg:hidden">
@@ -83,8 +83,10 @@ const Navbar = () => {
             <div className="navbar-end">
                 <a className="btn">Button</a>
             </div>
-        </div>
+            </div>
     );
 };
 
 export default Navbar;
+
+
