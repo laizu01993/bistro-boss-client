@@ -1,13 +1,15 @@
 import Banner from "./Banner";
 import Category from "./Category";
 import ChefServices from "./ChefServices";
+import PopularMenu from "./PopularMenu";
 
-const Home = () =>{
+const Home = () => {
     return (
         <div>
             <Banner></Banner>
             <Category></Category>
             <ChefServices></ChefServices>
+            <PopularMenu></PopularMenu>
         </div>
     );
 };
