@@ -5,11 +5,11 @@ import './Featured.css'
 
 const Featured = () => {
     return (
-        <div className="featured-item text-white mb-8 pt-6">
+        <div className="featured-item bg-fixed text-white mb-8 pt-6">
             <SectionTitle
                 subHeading={"Check it out"}
                 heading={"Featured item"}></SectionTitle>
-            <div className="md:flex justify-center items-center pb-20 pt-12 px-36">
+            <div className="md:flex justify-center items-center bg-black/30 backdrop-blur-sm  pb-20 pt-12 px-36">
                 <div>
                     <img src={featuredImg} alt="" />
                 </div>
@@ -20,7 +20,7 @@ const Featured = () => {
                         Our signature dish features tender bites of seared salmon topped with creamy garlic
                         sauce, roasted vegetables, and a drizzle of lemon butter. Perfect for those who love
                         fresh, hearty, and flavorful meals made with locally sourced ingredients.</p>
-                    <button className="btn btn-outline border-0 border-b-4 mt-4 text-white hover:bg-yellow-500 hover:border-yellow-500">
+                    <button className="btn uppercase btn-outline border-0 border-b-4 mt-4 text-white hover:bg-yellow-500 hover:border-yellow-500">
                         Read More
                     </button>
                 </div>
