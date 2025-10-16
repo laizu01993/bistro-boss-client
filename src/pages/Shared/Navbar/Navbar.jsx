@@ -16,7 +16,7 @@ const Navbar = () => {
     </li>
     <li>
       <NavLink
-        to=""
+        to="/contact"
         className={({ isActive }) =>
           isActive ? "text-yellow-300" : "text-white"
         }
@@ -52,6 +52,16 @@ const Navbar = () => {
         }
       >
         ORDER FOOD
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
+        to="/login"
+        className={({ isActive }) =>
+          isActive ? "text-yellow-300" : "text-white"
+        }
+      >
+        LOGIN
       </NavLink>
     </li>
   </>
