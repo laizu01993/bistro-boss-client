@@ -1,7 +1,9 @@
 import loginImage from "../../assets/others/authentication1.png"
 import bgImage from "../../assets/others/authentication.png"
-import { loadCaptchaEnginge, LoadCanvasTemplate,validateCaptcha } from 'react-simple-captcha';
-import { useEffect, useRef, useState } from "react";
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 
 const Login = () => {
@@ -10,8 +12,10 @@ const Login = () => {
 
     const [disabled, setDisabled] = useState(true);
 
+    const { signIn } = useContext(AuthContext);
+
     useEffect(() => {
-         loadCaptchaEnginge(6);
+        loadCaptchaEnginge(6);
     }, [])
 
     const handleLogin = event => {
@@ -20,13 +24,19 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password)
+
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
     }
 
     const handleValidateCaptcha = () => {
         const user_captcha_value = captchaRef.current.value;
-        if(validateCaptcha(user_captcha_value)){
+        if (validateCaptcha(user_captcha_value)) {
             setDisabled(false);
-        }else{
+        } else {
             setDisabled(true)
         }
     }
@@ -46,23 +56,24 @@ const Login = () => {
                             <h2 className="font-bold text-3xl text-center mb-4">Login</h2>
                             <label className="label">Email</label>
                             <input type="email"
-                            name="email" className="input" placeholder="Email" />
+                                name="email" className="input" placeholder="Email" />
                             <label className="label">Password</label>
                             <input type="password"
-                            name="password" className="input" placeholder="Password" />
+                                name="password" className="input" placeholder="Password" />
                             <div><a className="link link-hover">Forgot password?</a></div>
 
                             {/* Recaptcha */}
                             <label className="label">
-                                 <LoadCanvasTemplate></LoadCanvasTemplate>
+                                <LoadCanvasTemplate></LoadCanvasTemplate>
                             </label>
                             <input type="text"
-                            name="captcha" className="input" ref={captchaRef} placeholder="type the captcha above" />
+                                name="captcha" className="input" ref={captchaRef} placeholder="type the captcha above" />
                             <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button>
 
                             <input disabled={disabled} className="btn btn-neutral mt-4 bg-[#D1A054]" type="submit" value="Login"></input>
                         </fieldset>
                     </form>
+                    <p className="justify-center flex text-red-500">New Here? <Link to="/signup">Create an account</Link></p>
                 </div>
                 <div className="text-center lg:text-left">
                     <img className="max-h-[500px] w-auto object-contain" src={loginImage} alt="" />
