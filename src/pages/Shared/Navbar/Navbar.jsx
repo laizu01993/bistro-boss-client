@@ -89,6 +89,7 @@ const Navbar = () => {
     {
       user ?
         <>
+        <span>{user?.displayName}</span>
           <button onClick={handleLogOut} className="btn bg-[#D1A054] border-none text-white font-semibold hover:bg-[#b8873b] transition duration-300">Logout</button>
         </> :
         <>

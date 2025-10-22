@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 
 const PrivateRoute = ({children}) => {
 

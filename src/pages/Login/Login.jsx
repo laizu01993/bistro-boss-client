@@ -17,7 +17,7 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const form = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -49,7 +49,8 @@ const Login = () => {
         const user_captcha_value = e.target.value;
         if (validateCaptcha(user_captcha_value)) {
             setDisabled(false);
-        } else {
+        }
+         else {
             setDisabled(true)
         }
     }
