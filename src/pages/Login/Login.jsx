@@ -1,15 +1,14 @@
 import loginImage from "../../assets/others/authentication1.png"
 import bgImage from "../../assets/others/authentication.png"
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
-
-    const captchaRef = useRef(null);
 
     const [disabled, setDisabled] = useState(true);
 
@@ -30,11 +29,18 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "User Login Successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             })
     }
 
-    const handleValidateCaptcha = () => {
-        const user_captcha_value = captchaRef.current.value;
+    const handleValidateCaptcha = (e) => {
+        const user_captcha_value = e.target.value;
         if (validateCaptcha(user_captcha_value)) {
             setDisabled(false);
         } else {
@@ -71,10 +77,9 @@ const Login = () => {
                                 <label className="label">
                                     <LoadCanvasTemplate></LoadCanvasTemplate>
                                 </label>
-                                <input type="text"
-                                    name="captcha" className="input" ref={captchaRef} placeholder="type the captcha above" />
-                                <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button>
-
+                                <input onBlur={handleValidateCaptcha} type="text"
+                                    name="captcha" className="input" placeholder="type the captcha above" />
+                                
                                 <input disabled={disabled} className="btn btn-neutral mt-4 bg-[#D1A054]" type="submit" value="Login"></input>
                             </fieldset>
                         </form>
