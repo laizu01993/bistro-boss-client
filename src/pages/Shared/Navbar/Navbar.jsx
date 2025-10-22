@@ -64,6 +64,16 @@ const Navbar = () => {
         ORDER FOOD
       </NavLink>
     </li>
+    <li>
+      <NavLink
+        to="/secret"
+        className={({ isActive }) =>
+          isActive ? "text-yellow-300" : "text-white"
+        }
+      >
+        SECRET
+      </NavLink>
+    </li>
 
     <li>
       <NavLink
