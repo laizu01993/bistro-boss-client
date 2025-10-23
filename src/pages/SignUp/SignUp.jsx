@@ -104,7 +104,7 @@ const SignUp = () => {
                                 <input className="btn btn-neutral mt-4 bg-[#D1A054]" type="submit" value="Sign Up"></input>
                             </fieldset>
                         </form>
-                        <p><small>Already have an account? <Link to="/login">Please Login</Link></small></p>
+                        <p className="text-center"><small>Already have an account? <Link to="/login">Please Login</Link></small></p>
                     </div>
                     <div className="text-center lg:text-left">
                         <img className="max-h-[500px] w-auto object-contain" src={signUpImage} alt="" />
