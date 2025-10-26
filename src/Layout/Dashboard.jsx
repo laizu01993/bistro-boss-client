@@ -3,8 +3,12 @@ import { FaCalendarAlt, FaListAlt, FaShoppingBag, FaShoppingCart } from "react-i
 import { IoHomeSharp, IoMenu, IoWallet } from "react-icons/io5";
 import { MdEmail, MdRateReview } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
+
+    const [cart] = useCart();
+
     return (
         <div className="flex">
             {/* Dashboard side bar */}
@@ -33,7 +37,7 @@ const Dashboard = () => {
                         <NavLink className={({ isActive }) =>
                             isActive
                                 ? "text-white text-xl"
-                                : "text-black hover:text-white hover:bg-amber-400 text-xl"} to="/dashboard/cart"> <FaShoppingCart className="text-xl" />My Cart</NavLink>
+                                : "text-black hover:text-white hover:bg-amber-400 text-xl"} to="/dashboard/cart"> <FaShoppingCart className="text-xl" />My Cart ({cart.length})</NavLink>
                     </li>
                     <li>
                         <NavLink className={({ isActive }) =>
