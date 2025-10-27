@@ -6,6 +6,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 
 const Login = () => {
@@ -90,8 +91,12 @@ const Login = () => {
                                 <input disabled={disabled} className="btn btn-neutral mt-4 bg-[#D1A054]" type="submit" value="Login"></input>
                             </fieldset>
                         </form>
-                        <p className="justify-center flex text-red-500">New Here? <Link to="/signup">Create an account</Link></p>
+                        <p className="justify-center flex text-red-500 ">New Here? <Link to="/signup">Create an account</Link></p>
+                        <div>
+                             <SocialLogin></SocialLogin>
+                        </div>
                     </div>
+        
                     <div className="text-center lg:text-left">
                         <img className="max-h-[500px] w-auto object-contain" src={loginImage} alt="" />
                     </div>

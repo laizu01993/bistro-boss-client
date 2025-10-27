@@ -6,11 +6,16 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
+
 
 
 const SignUp = () => {
 
     const { createUser, updateUserProfile } = useContext(AuthContext);
+
+    const axiosPublic = useAxiosPublic();
 
     const navigate = useNavigate();
 
@@ -28,15 +33,29 @@ const SignUp = () => {
                 console.log(loggedUser)
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
-                        reset();
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "User created successfully",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        navigate('/')
+                        // Create user entry in the database
+                        const userInfo = {
+                            name: data.name,
+                            photo: data.photoURL,
+                            email: data.email,
+
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "User created successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/')
+
+                                }
+                            })
+
 
                     })
                     .catch((error) => {
@@ -105,8 +124,12 @@ const SignUp = () => {
                             </fieldset>
                         </form>
                         <p className="text-center"><small>Already have an account? <Link to="/login">Please Login</Link></small></p>
+                        <div>
+                             <SocialLogin></SocialLogin>
+                        </div>
                     </div>
-                    <div className="text-center lg:text-left">
+                        
+                     <div className="text-center lg:text-left">
                         <img className="max-h-[500px] w-auto object-contain" src={signUpImage} alt="" />
                     </div>
                 </div>
