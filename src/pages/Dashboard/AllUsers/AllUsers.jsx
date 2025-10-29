@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiAdminFill, RiDeleteBin6Line } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 
@@ -11,13 +11,30 @@ const AllUsers = () => {
     const { refetch, data: users = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users');
+            const res = await axiosSecure.get('/users', {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('access-token')}`
+                }
+            });
             return res.data;
         }
     })
 
-    const handleMakeAdmin = user =>{
-        
+    const handleMakeAdmin = user => {
+        axiosSecure.patch(`/users/admin/${user._id}`)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `${user.name} is an Admin now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
     }
 
     const handleDeleteUser = user => {
@@ -73,9 +90,9 @@ const AllUsers = () => {
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>
-                                    <button onClick={() => handleMakeAdmin(user)} className="btn btn-sm bg-amber-600">
+                                    { user.role === 'admin' ? <button className="p-2 btn-sm bg-amber-600"><RiAdminFill className="text-xl text-white" /></button> : <button onClick={() => handleMakeAdmin(user)} className="btn btn-sm bg-amber-600">
                                         <FaUsers className="text-xl text-white"></FaUsers>
-                                    </button>
+                                    </button>}
                                 </td>
                                 <td>
                                     <button onClick={() => handleDeleteUser(user)} className="btn btn-sm bg-red-500 text-white text-lg hover:bg-red-400"><RiDeleteBin6Line /></button>
