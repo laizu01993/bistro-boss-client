@@ -4,6 +4,7 @@ import useMenu from "../../../hooks/useMenu";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 
 const ManageItems = () => {
@@ -21,11 +22,11 @@ const ManageItems = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then( async (result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
 
                 const res = await axiosSecure.delete(`/menu/${item._id}`)
-                    .then( res => {
+                    .then(res => {
                         if (res.data.deletedCount > 0) {
                             refetch();
                             Swal.fire({
@@ -79,7 +80,9 @@ const ManageItems = () => {
                                 <td>{item.name}</td>
                                 <td>{item.price}</td>
                                 <td>
-                                    <button className="btn bg-amber-500 hover:bg-amber-400 text-white"><FiEdit /></button>
+                                    <Link to={`/dashboard/updateItem/${item._id}`}>
+                                        <button className="btn bg-amber-500 hover:bg-amber-400 text-white"><FiEdit /></button>
+                                    </Link>
                                 </td>
                                 <td>
                                     <button onClick={() => handleDeleteItem(item)} className="btn btn-sm bg-red-500 text-white text-lg hover:bg-red-400"><RiDeleteBin6Line /></button>
