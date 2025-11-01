@@ -2,6 +2,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import useCart from "../../../hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
 
@@ -45,7 +46,9 @@ const Cart = () => {
             <div className="flex items-center justify-evenly mb-10">
                 <h2 className="text-4xl">Total Orders: {cart.length}</h2>
                 <h2 className="text-4xl">Total Price: {totalPrice}</h2>
+                {cart.length ? <Link to="/dashboard/payment">
                 <button className="btn bg-amber-500 btn-md hover:bg-amber-400 text-white">Pay</button>
+                </Link> : <button disabled className="btn bg-amber-500 btn-md hover:bg-amber-400 text-white">Pay</button>}
             </div>
             {/* Table */}
             <div className="overflow-x-auto">
