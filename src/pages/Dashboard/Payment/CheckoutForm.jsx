@@ -1,11 +1,14 @@
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 
+
 const CheckoutForm = () => {
 
     const stripe = useStripe();
     const elements = useElements();
-     const [error, setError] = useState("");
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -13,14 +16,16 @@ const CheckoutForm = () => {
         if (!stripe || !elements) {
             return;
         }
-        const {error} = await stripe.confirmPayment({
+        const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
-            confirmParams: {
-                return_url: "http://localhost:5173/payment-success",
-            }
+            redirect: "if_required",
         });
-        if(error){
+        if (error) {
             setError(error.message);
+        }
+        else if (paymentIntent && paymentIntent.status === "succeeded") {
+            setSuccess(" Payment successful! Thank you.");
+            console.log(paymentIntent)
         }
     }
     return (
@@ -30,6 +35,7 @@ const CheckoutForm = () => {
                 Pay
             </button>
             {error && <p className="text-red-500 mt-2">{error}</p>}
+            {success && <p className="text-green-600 font-semibold">{success}</p>}
         </form>
     );
 };
