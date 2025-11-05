@@ -1,9 +1,11 @@
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ totalPrice, cart, axiosSecure }) => {
 
+    const { user } = useContext(AuthContext);
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState("");
@@ -25,7 +27,19 @@ const CheckoutForm = () => {
         }
         else if (paymentIntent && paymentIntent.status === "succeeded") {
             setSuccess(" Payment successful! Thank you.");
-            console.log(paymentIntent)
+            console.log(paymentIntent);
+
+            // send payment info to the database
+            const payment = {
+                email: user.email,
+                price: totalPrice,
+                date: new Date(),
+                cartIds: cart.map(item => item._id),
+                menuItemId: cart.map(item => item.menuId),
+                status: 'pending'
+            }
+             const res = await axiosSecure.post('/payments', payment);
+             console.log('payment saved', res.data)
         }
     }
     return (

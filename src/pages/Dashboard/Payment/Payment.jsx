@@ -43,7 +43,9 @@ const Payment = () => {
                 heading={"Payment"}></SectionTitle>
             <div>
                 {clientSecret ?  (<Elements stripe={stripePromise} options={ options }>
-                    <CheckoutForm></CheckoutForm>
+                    <CheckoutForm totalPrice={totalPrice} 
+                    cart={cart}
+                    axiosSecure={axiosSecure}></CheckoutForm>
                 </Elements>
                 ) : (
                     <p>Loading Payment</p>
