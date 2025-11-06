@@ -72,7 +72,7 @@ const Dashboard = () => {
                                     <NavLink className={({ isActive }) =>
                                         isActive
                                             ? "text-white text-xl"
-                                            : "text-black hover:text-white hover:bg-amber-400 text-xl"} to="/dashboard/payment"> <IoWallet className="text-xl" />Payment History</NavLink>
+                                            : "text-black hover:text-white hover:bg-amber-400 text-xl"} to="/dashboard/paymentHistory"> <IoWallet className="text-xl" />Payment History</NavLink>
                                 </li>
                                 <li>
                                     <NavLink className={({ isActive }) =>

@@ -13,17 +13,19 @@ const Payment = () => {
 
     const [clientSecret, setClientSecret] = useState("");
     const axiosSecure = useAxiosSecure();
-    const [cart] = useCart();
+    const [cart, refetch] = useCart();
     const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
     useEffect(() => {
-        axiosSecure.post('/create-payment-intent', { price: totalPrice })
-            .then(res => {
-                setClientSecret(res.data.clientSecret)
-            })
-            .catch((err) => {
-                console.error("Error creating payment intent:", err);
-            });
+        if (totalPrice > 0) {
+            axiosSecure.post('/create-payment-intent', { price: totalPrice })
+                .then(res => {
+                    setClientSecret(res.data.clientSecret)
+                })
+                .catch((err) => {
+                    console.error("Error creating payment intent:", err);
+                });
+        }
     }, [axiosSecure, totalPrice])
 
 
@@ -42,10 +44,11 @@ const Payment = () => {
             <SectionTitle subHeading={"Please Pay"}
                 heading={"Payment"}></SectionTitle>
             <div>
-                {clientSecret ?  (<Elements stripe={stripePromise} options={ options }>
-                    <CheckoutForm totalPrice={totalPrice} 
-                    cart={cart}
-                    axiosSecure={axiosSecure}></CheckoutForm>
+                {clientSecret ? (<Elements stripe={stripePromise} options={options}>
+                    <CheckoutForm totalPrice={totalPrice}
+                        cart={cart}
+                        axiosSecure={axiosSecure}
+                        refetch={refetch}></CheckoutForm>
                 </Elements>
                 ) : (
                     <p>Loading Payment</p>
