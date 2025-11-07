@@ -10,7 +10,7 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
   const [isAdmin] = useAdmin();
-  
+
   const [cart] = useCart();
 
   const handleLogOut = () => {
@@ -41,9 +41,22 @@ const Navbar = () => {
         CONTACT US
       </NavLink>
     </li>
+     
+     {/* Condition with dashboard */}
+     {
+      user && isAdmin ? <li>
+      <NavLink
+        to="/dashboard/adminHome"
+        className={({ isActive }) =>
+          isActive ? "text-yellow-300" : "text-white"
+        }
+      >
+        DASHBOARD
+      </NavLink>
+    </li>  : 
     <li>
       <NavLink
-        to=""
+        to="/dashboard/userHome"
         className={({ isActive }) =>
           isActive ? "text-yellow-300" : "text-white"
         }
@@ -51,6 +64,7 @@ const Navbar = () => {
         DASHBOARD
       </NavLink>
     </li>
+     }
     <li>
       <NavLink
         to="/menu"
