@@ -59,7 +59,7 @@ const Login = () => {
     return (
         <>
             <Helmet>
-                <title>Bistro Boss | Sign Up</title>
+                <title>Bistro Boss | Log In</title>
             </Helmet>
             <div className="hero min-h-screen"
                 style={{

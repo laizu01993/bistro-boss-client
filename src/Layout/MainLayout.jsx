@@ -13,7 +13,7 @@ const MainLayout = () => {
             {noHeaderFooter || <Navbar></Navbar>}
 
             <Outlet></Outlet>
-            
+
             {noHeaderFooter || <Footer></Footer>}
         </div>
     );

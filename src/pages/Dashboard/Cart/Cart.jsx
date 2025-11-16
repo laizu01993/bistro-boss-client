@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
+
 const Cart = () => {
 
     const [cart, refetch] = useCart();
@@ -27,8 +29,7 @@ const Cart = () => {
 
                 axiosSecure.delete(`/carts/${id}`)
                     .then(res => {
-                        if (res.data.deletedCount > 0) 
-                        {
+                        if (res.data.deletedCount > 0) {
                             refetch();
                             Swal.fire({
                                 title: "Deleted!",
@@ -42,12 +43,15 @@ const Cart = () => {
     }
 
     return (
-        <div>
+        <div className="p-6">
+            <SectionTitle subHeading={"My Cart"}
+                heading={"Wanna add more?"}></SectionTitle>
+
             <div className="flex items-center justify-evenly mb-10">
                 <h2 className="text-4xl">Total Orders: {cart.length}</h2>
                 <h2 className="text-4xl">Total Price: {totalPrice}</h2>
                 {cart.length ? <Link to="/dashboard/payment">
-                <button className="btn bg-amber-500 btn-md hover:bg-amber-400 text-white">Pay</button>
+                    <button className="btn bg-amber-500 btn-md hover:bg-amber-400 text-white">Pay</button>
                 </Link> : <button disabled className="btn bg-amber-500 btn-md hover:bg-amber-400 text-white">Pay</button>}
             </div>
             {/* Table */}

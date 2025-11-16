@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { RiAdminFill, RiDeleteBin6Line } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 
 const AllUsers = () => {
 
@@ -65,7 +66,9 @@ const AllUsers = () => {
     }
 
     return (
-        <div>
+        <div className="p-6">
+            <SectionTitle subHeading={"How Many?"}
+                heading={"Manage All Users"}></SectionTitle>
             <div>
                 <h2 className="p-6 text-4xl">Total Users: {users.length}</h2>
             </div>
