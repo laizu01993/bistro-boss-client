@@ -30,10 +30,10 @@ const AuthProvider = ({ children }) => {
     }
 
     // Google sign in
-    const googleSignIn = () =>{
+    const googleSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
-    } 
+    }
 
     // Update User Profile
     const updateUserProfile = (name, photo) => {
@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
     }
 
     // Logout User
-    const logOut = () =>{
+    const logOut = () => {
         setLoading(true);
         return signOut(auth);
     }
@@ -53,16 +53,18 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
 
-            if(currentUser){
+            if (currentUser) {
                 // get token and store client
-                const userInfo = {email: currentUser.email};
+                const userInfo = { email: currentUser.email };
                 axiosPublic.post('/jwt', userInfo)
-                .then(res =>{
-                    if(res.data.token){
-                        localStorage.setItem('access-token', res.data.token);
-                    }
-                    setLoading(false);
-                })
+                    .then(res => {
+                        if (res.data.token) {
+                            localStorage.setItem('access-token', res.data.token);
+                        }
+
+                        setLoading(false);
+
+                    })
             }
             else {
                 // remove token
@@ -75,7 +77,7 @@ const AuthProvider = ({ children }) => {
         }
     }, [axiosPublic])
 
-    
+
 
     const authInfo = {
         user,

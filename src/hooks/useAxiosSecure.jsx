@@ -45,48 +45,40 @@
 // };
 
 // export default useAxiosSecure;
-import axios from "axios";
+
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import axiosSecure from "../axiosSecure/axiosSecure";
 import { AuthContext } from "../providers/AuthProvider";
 
-const axiosSecure = axios.create({
-    baseURL: 'https://bistro-boss-server-5us7.onrender.com'
-});
 
 const useAxiosSecure = () => {
     const navigate = useNavigate();
     const { logOut } = useContext(AuthContext);
 
     useEffect(() => {
-        // Request interceptor
-        const reqInterceptor = axiosSecure.interceptors.request.use(
-            (config) => {
-                const token = localStorage.getItem('access-token');
-                config.headers.authorization = `Bearer ${token}`;
-                return config;
-            },
-            (error) => Promise.reject(error)
-        );
+        const req = axiosSecure.interceptors.request.use(config => {
+            const token = localStorage.getItem('access-token');
+            config.headers.authorization = `Bearer ${token}`;
+            return config;
+        });
 
-        // Response interceptor
-        const resInterceptor = axiosSecure.interceptors.response.use(
-            (response) => response,
-            async (error) => {
+        const res = axiosSecure.interceptors.response.use(
+            response => response,
+            async error => {
                 const status = error?.response?.status;
-
                 if (status === 401 || status === 403) {
                     await logOut();
                     navigate('/login');
                 }
-
                 return Promise.reject(error);
             }
         );
 
         return () => {
-            axiosSecure.interceptors.request.eject(reqInterceptor);
-            axiosSecure.interceptors.response.eject(resInterceptor);
+            axiosSecure.interceptors.request.eject(req);
+            axiosSecure.interceptors.response.eject(res);
         };
     }, [logOut, navigate]);
 
@@ -94,3 +86,4 @@ const useAxiosSecure = () => {
 };
 
 export default useAxiosSecure;
+
